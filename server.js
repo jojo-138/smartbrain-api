@@ -7,8 +7,8 @@ const knex = require('knex')({
   connection: {
     host : '127.0.0.1',
     port : 5432,
-    user : '<username>',
-    password : '<password>',
+    user : 'joana',
+    password : ' ',
     database : 'smartbrain'
   }
 });
@@ -20,10 +20,14 @@ const saltRounds = 10;
 const stub = ClarifaiStub.grpc();
 
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key <Clarifai_API_key>");
+metadata.set("authorization", "Key 3ab909b9b8f44998b7e7f058f7025b7f");
 
 app.use(cors());
 app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('app is working')
+})
 
 app.post('/register', (req, res) => {
   const { name,email, password } = req.body;
@@ -129,6 +133,6 @@ app.put('/imageEntry', (req, res) => {
     .catch(err => res.status(400).json('Unable to update entries.'))
 })
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`App listening on port ${process.env.PORT}`);
 })
