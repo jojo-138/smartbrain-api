@@ -69,14 +69,14 @@ app.post('/register', (req, res) => {
 
 app.post('/signin', (req, res) => {
   const { email, password } = req.body;
-  if (email && password) {
+  if (req.body.email && req.body.password) {
     knex('login')
       .where({
-        email: email
+        email: req.body.email
       })
       .select('password')
-      .then(loginPassword => {
-        const isPasswordCorrect = bcrypt.compareSync(password, loginPassword[0].password);
+      .then(password => {
+        const isPasswordCorrect = bcrypt.compareSync(req.body.password, password[0].password);
         if (isPasswordCorrect) {
           knex('users')
           .where({
