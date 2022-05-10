@@ -19,7 +19,7 @@ const saltRounds = 10;
 const stub = ClarifaiStub.grpc();
 
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key 3ab909b9b8f44998b7e7f058f7025b7f");
+metadata.set("authorization", `Key ${process.env.API_KEY}`);
 
 app.use(cors());
 app.use(express.json());
